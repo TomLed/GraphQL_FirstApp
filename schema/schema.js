@@ -16,7 +16,7 @@ const FilmType = new GraphQLObjectType({
     fields: () => ({
         id: {type: GraphQLString},
         title: {type: GraphQLString},
-        genre: {type: GraphQLString}
+        director: {type: GraphQLString}
     })
 });
 
