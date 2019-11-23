@@ -4,6 +4,7 @@ comment intéragir avec ces données.
 
 const graphql = require ('graphql');
 
+
 // On récupère la fonction GraphQLObjectType
 const {GraphQLObjectType, GraphQLString} = graphql;
 
@@ -16,6 +17,6 @@ const FilmType = new GraphQLObjectType({
     fields: () => ({
         id: {type: GraphQLString},
         title: {type: GraphQLString},
-        genre: {type: GraphQLString}
+        director: {type: GraphQLString}
     })
 })
