@@ -13,6 +13,7 @@ On va spécifier ici le schéma et la structure de nos données
 
 app.use('/graphql', graphqlHTTP({
     schema,
+    graphiql: true
 }));
 
 app.listen(4000, function() {

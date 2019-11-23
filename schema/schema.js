@@ -3,6 +3,7 @@ comment intéragir avec ces données.
  */
 
 const graphql = require ('graphql');
+const _ = require ('lodash');
 
 // dummy data, on utilisera mongoDB ensuite
 var films = [
@@ -13,7 +14,7 @@ var films = [
 
 
 // On récupère la fonction GraphQLObjectType
-const {GraphQLObjectType, GraphQLString, GraphQLSchema} = graphql;
+const {GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLID} = graphql;
 
 const FilmType = new GraphQLObjectType({
     name: 'Film',
@@ -22,7 +23,7 @@ const FilmType = new GraphQLObjectType({
     you can use a function expression (aka a closure or a thunk) to supply the fields lazily.
      */
     fields: () => ({
-        id: {type: GraphQLString},
+        id: {type: GraphQLID},
         title: {type: GraphQLString},
         director: {type: GraphQLString}
     })
@@ -34,10 +35,10 @@ const RootQuery = new GraphQLObjectType({
     fields: {
         film: {
             type: FilmType,
-            args: {id: {type: GraphQLString}},
+            args: {id: {type: GraphQLID}},
             resolve(parent,args){
                 // code pour obtenir les donnée d'une db
-                return lodash.find(books, {id: args.id});
+                return _.find(films, {id: args.id});
             }
         }
     }
