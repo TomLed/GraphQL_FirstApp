@@ -4,6 +4,14 @@ comment intéragir avec ces données.
 
 const graphql = require ('graphql');
 
+// dummy data, on utilisera mongoDB ensuite
+var films = [
+    {title: "La Grande Vadrouille", director: "Gérard Oury", id: "1"},
+    {title: "Joker", director: "Todd Phillips", id: "2"},
+    {title: "Parasite", director: "Bong Joon-ho", id: "3"}
+];
+
+
 // On récupère la fonction GraphQLObjectType
 const {GraphQLObjectType, GraphQLString, GraphQLSchema} = graphql;
 
@@ -16,7 +24,7 @@ const FilmType = new GraphQLObjectType({
     fields: () => ({
         id: {type: GraphQLString},
         title: {type: GraphQLString},
-        genre: {type: GraphQLString}
+        director: {type: GraphQLString}
     })
 });
 
@@ -29,6 +37,7 @@ const RootQuery = new GraphQLObjectType({
             args: {id: {type: GraphQLString}},
             resolve(parent,args){
                 // code pour obtenir les donnée d'une db
+                return lodash.find(books, {id: args.id});
             }
         }
     }
