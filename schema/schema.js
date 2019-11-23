@@ -5,7 +5,7 @@ comment intéragir avec ces données.
 const graphql = require ('graphql');
 
 // On récupère la fonction GraphQLObjectType
-const {GraphQLObjectType, GraphQLString} = graphql;
+const {GraphQLObjectType, GraphQLString, GraphQLSchema} = graphql;
 
 const FilmType = new GraphQLObjectType({
     name: 'Film',
@@ -18,4 +18,23 @@ const FilmType = new GraphQLObjectType({
         title: {type: GraphQLString},
         genre: {type: GraphQLString}
     })
-})
+});
+
+const RootQuery = new GraphQLObjectType({
+    name: 'RootQueryType',
+    // On définit ici le nom des requêtes et comment formuler la requête (ici avec un ID) pour obtenir un résultat
+    fields: {
+        film: {
+            type: FilmType,
+            args: {id: {type: GraphQLString}},
+            resolve(parent,args){
+                // code pour obtenir les donnée d'une db
+            }
+        }
+    }
+});
+
+module.exports = new GraphQLSchema({
+    query: RootQuery
+});
+

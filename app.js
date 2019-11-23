@@ -1,5 +1,6 @@
 const express = require('express');
-const graphqlHTTP = require('express-graphql')
+const graphqlHTTP = require('express-graphql');
+const schema = require('./schema/schema')
 
 const app = express();
 
@@ -11,7 +12,7 @@ On va spécifier ici le schéma et la structure de nos données
 */
 
 app.use('/graphql', graphqlHTTP({
-
+    schema,
 }));
 
 app.listen(4000, function() {
