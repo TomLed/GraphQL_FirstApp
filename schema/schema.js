@@ -5,11 +5,22 @@ comment intéragir avec ces données.
 const graphql = require ('graphql');
 const _ = require ('lodash');
 
+// On récupère des fonctions de GraphQL
+const {
+    GraphQLObjectType,
+    GraphQLString,
+    GraphQLSchema,
+    GraphQLID,
+    GraphQLList
+} = graphql;
+
+
 // dummy data, on utilisera mongoDB ensuite
 var films = [
-    {title: "La Grande Vadrouille", id: "1", authorid: "1"},
-    {title: "Joker", id: "2", authorid: "2"},
-    {title: "Parasite", id: "3", authorid: "3"}
+    {title: "La Grande Vadrouille", id: "1", directorid: "1"},
+    {title: "Joker", id: "2", directorid: "2"},
+    {title: "Parasite", id: "3", directorid: "3"},
+    {title: "Very Bad Trip", id: "4", directorid: "2"}
 ];
 
 var directors = [
@@ -17,10 +28,6 @@ var directors = [
     {name:"Todd Phillips", nationality: "Américain", id: '2' },
     {name:"Bong Joon-ho", nationality: "Coréen", id: '3'}
 ];
-
-
-// On récupère la fonction GraphQLObjectType
-const {GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLID} = graphql;
 
 const FilmType = new GraphQLObjectType({
     name: 'Film',
@@ -34,7 +41,7 @@ const FilmType = new GraphQLObjectType({
         director: {
             type: DirectorType,
             resolve(parent, args){
-                return _.find(directors, {id: parent.authorid})
+                return _.find(directors, {id: parent.directorid})
             }
         }
     })
@@ -49,7 +56,13 @@ const DirectorType = new GraphQLObjectType({
     fields: () => ({
         id: {type: GraphQLID},
         name: {type: GraphQLString},
-        nationality: {type: GraphQLString}
+        nationality: {type: GraphQLString},
+        films: {
+            type: new GraphQLList(FilmType),
+            resolve(parent, args){
+                return _.filter(films, {directorid: parent.id})
+            }
+        }
     })
 });
 
