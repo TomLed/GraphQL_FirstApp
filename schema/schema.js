@@ -7,15 +7,15 @@ const _ = require ('lodash');
 
 // dummy data, on utilisera mongoDB ensuite
 var films = [
-    {title: "La Grande Vadrouille", director: "Gérard Oury", id: "1"},
-    {title: "Joker", director: "Todd Phillips", id: "2"},
-    {title: "Parasite", director: "Bong Joon-ho", id: "3"}
+    {title: "La Grande Vadrouille", id: "1", authorid: "1"},
+    {title: "Joker", id: "2", authorid: "2"},
+    {title: "Parasite", id: "3", authorid: "3"}
 ];
 
 var directors = [
-    {name:"Gérard Oury", nationality: "Français", id: '1' },
+    {name:"Gérard Oury", nationality: "Français", id: '1'},
     {name:"Todd Phillips", nationality: "Américain", id: '2' },
-    {name:"Bong Joon-ho", nationality: "Coréen", id: '3' }
+    {name:"Bong Joon-ho", nationality: "Coréen", id: '3'}
 ];
 
 
@@ -31,7 +31,12 @@ const FilmType = new GraphQLObjectType({
     fields: () => ({
         id: {type: GraphQLID},
         title: {type: GraphQLString},
-        director: {type: GraphQLString}
+        director: {
+            type: DirectorType,
+            resolve(parent, args){
+                return _.find(directors, {id: parent.authorid})
+            }
+        }
     })
 });
 
@@ -60,7 +65,7 @@ const RootQuery = new GraphQLObjectType({
                 return _.find(films, {id: args.id});
             }
         },
-        author: {
+        director: {
             type: DirectorType,
             args: {id: {type: GraphQLID}},
             resolve(parent, args) {
