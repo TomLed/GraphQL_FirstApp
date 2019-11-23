@@ -3,7 +3,7 @@ comment intéragir avec ces données.
  */
 
 const graphql = require ('graphql');
-
+const _= require ('lodash')
 // dummy data, on utilisera mongoDB ensuite
 var films = [
     {title: "La Grande Vadrouille", director: "Gérard Oury", id: "1"},
@@ -37,7 +37,7 @@ const RootQuery = new GraphQLObjectType({
             args: {id: {type: GraphQLString}},
             resolve(parent,args){
                 // code pour obtenir les donnée d'une db
-                return lodash.find(books, {id: args.id});
+                return _.find(books, {id: args.id});
             }
         }
     }
