@@ -1,8 +1,15 @@
 const express = require('express');
 const graphqlHTTP = require('express-graphql');
-const schema = require('./schema/schema')
+const schema = require('./schema/schema');
+const mongoose = require('mongoose');
 
 const app = express();
+
+// connect to mlab database
+mongoose.connect('mongodb://thomas:test123@ds037551.mlab.com:37551/gql-ecm');
+mongoose.connection.once('open', () => {
+    console.log('Connected to database')
+});
 
 /* Création d'un middleware
 Là où on va envoyer toutes nos requêtes GraphQL. A chaque fois que quelqu'un ira sur
