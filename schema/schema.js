@@ -4,7 +4,9 @@ comment intéragir avec ces données.
 
 const graphql = require ('graphql');
 const _ = require ('lodash');
-const graphql_iso_date = require ('graphql-iso-date')
+const graphql_iso_date = require ('graphql-iso-date');
+const Taks = require('../models/task.js');
+const Collaborator = require('../models/collaborator')
 
 // On récupère des fonctions de GraphQL
 const {
@@ -24,7 +26,7 @@ const {
 
 
 // dummy data, on utilisera mongoDB ensuite
-var tasks = [
+/*var tasks = [
     {name: "Projet Développement mobile", date:"2007-12-03", id: "1", collaboratorid: "1"},
     {name: "Faire le ménage", date:"2007-12-03", id: "2", collaboratorid: "2"},
     {name: "Parasite", date:"2017-10-23", id: "3", collaboratorid: "3"},
@@ -35,7 +37,7 @@ var collaborators = [
     {name:"Gérard Oury", id: '1'},
     {name:"Todd Phillips", id: '2' },
     {name:"Bong Joon-ho", id: '3'}
-];
+];  */
 
 const TaskType = new GraphQLObjectType({
     name: 'Task',
@@ -50,7 +52,7 @@ const TaskType = new GraphQLObjectType({
         collaborators: {
             type: CollaboratorType,
             resolve(parent, args){
-                return _.find(collaborators, {id: parent.collaboratorid})
+                //return _.find(collaborators, {id: parent.collaboratorid})
             }
         }
     })
@@ -68,7 +70,7 @@ const CollaboratorType = new GraphQLObjectType({
         tasks: {
             type: new GraphQLList(TaskType),
             resolve(parent, args){
-                return _.filter(tasks, {collaboratorid: parent.id})
+                //return _.filter(tasks, {collaboratorid: parent.id})
             }
         }
     })
@@ -83,26 +85,26 @@ const RootQuery = new GraphQLObjectType({
             args: {id: {type: GraphQLID}},
             resolve(parent, args) {
                 // code pour obtenir les donnée d'une db
-                return _.find(tasks, {id: args.id});
+                //return _.find(tasks, {id: args.id});
             }
         },
         collaborator: {
             type: CollaboratorType,
             args: {id: {type: GraphQLID}},
             resolve(parent, args) {
-            return _.find(collaborators, {id: args.id})
+                //return _.find(collaborators, {id: args.id})
             }
         },
         tasks: {
             type: new GraphQLList(TaskType),
             resolve(parent, args){
-                return tasks
+                //return tasks
             }
         },
         collaborators: {
             type: new GraphQLList(CollaboratorType),
             resolve(parent, args){
-                return collaborators
+                //return collaborators
             }
         }
     }
