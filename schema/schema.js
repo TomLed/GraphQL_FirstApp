@@ -14,7 +14,8 @@ const {
     GraphQLString,
     GraphQLSchema,
     GraphQLID,
-    GraphQLList
+    GraphQLList,
+    GraphQLNonNull
 } = graphql;
 
 // Permet de gérer les dates
@@ -122,7 +123,7 @@ const Mutation = new GraphQLObjectType({
         addCollaborator: {
             type: CollaboratorType,
             args: {
-                name: {type: GraphQLString}
+                name: {type: new GraphQLNonNull(GraphQLString)}
             },
             resolve(parent, args){
                 let collaborator = new Collaborator({
@@ -134,9 +135,9 @@ const Mutation = new GraphQLObjectType({
         addTask: {
             type: TaskType,
             args: {
-                name: {type: GraphQLString},
+                name: {type: new GraphQLNonNull(GraphQLString)},
                 date: {type: GraphQLDate},
-                collaboratorid: {type: GraphQLID}
+                collaboratorid: {type: new GraphQLNonNull(GraphQLID)}
             },
             resolve(parent, args){
                 let task = new Task({
