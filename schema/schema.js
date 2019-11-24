@@ -110,7 +110,26 @@ const RootQuery = new GraphQLObjectType({
     }
 });
 
+const Mutation = new GraphQLObjectType({
+    name: 'Mutation',
+    fields: {
+        addCollaborator: {
+            type: CollaboratorType,
+            args: {
+                name: {type: GraphQLString}
+            },
+            resolve(parent, args){
+                let collaborator = new Collaborator({
+                  name: args.name,
+                });
+                return collaborator.save();
+            }
+        }
+    }
+});
+
 module.exports = new GraphQLSchema({
-    query: RootQuery
+    query: RootQuery,
+    mutation: Mutation
 });
 
