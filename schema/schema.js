@@ -5,7 +5,7 @@ comment intéragir avec ces données.
 const graphql = require ('graphql');
 const _ = require ('lodash');
 const graphql_iso_date = require ('graphql-iso-date');
-const Taks = require('../models/task.js');
+const Task = require('../models/task.js');
 const Collaborator = require('../models/collaborator')
 
 // On récupère des fonctions de GraphQL
@@ -123,6 +123,22 @@ const Mutation = new GraphQLObjectType({
                   name: args.name,
                 });
                 return collaborator.save();
+            }
+        },
+        addTask: {
+            type: TaskType,
+            args: {
+                name: {type: GraphQLString},
+                date: {type: GraphQLDate},
+                collaboratorid: {type: GraphQLID}
+            },
+            resolve(parent, args){
+                let task = new Task({
+                    name: args.name,
+                    date: args.date,
+                    collaboratorid: args.collaboratorid
+                });
+                return task.save();
             }
         }
     }
