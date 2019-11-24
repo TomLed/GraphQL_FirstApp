@@ -49,10 +49,11 @@ const TaskType = new GraphQLObjectType({
         id: {type: GraphQLID},
         name: {type: GraphQLString},
         date: {type: GraphQLDate},
-        collaborators: {
+        collaborator: {
             type: CollaboratorType,
             resolve(parent, args){
-                //return _.find(collaborators, {id: parent.collaboratorid})
+                //return _.find(collaborator, {id: parent.collaboratorid})
+                return Collaborator.findById(parent.collaboratorid);
             }
         }
     })
@@ -71,6 +72,7 @@ const CollaboratorType = new GraphQLObjectType({
             type: new GraphQLList(TaskType),
             resolve(parent, args){
                 //return _.filter(tasks, {collaboratorid: parent.id})
+                return Task.find({ collaboratorid: parent.id});
             }
         }
     })
@@ -86,25 +88,29 @@ const RootQuery = new GraphQLObjectType({
             resolve(parent, args) {
                 // code pour obtenir les donnée d'une db
                 //return _.find(tasks, {id: args.id});
+                return Task.findById(args.id);
             }
         },
         collaborator: {
             type: CollaboratorType,
             args: {id: {type: GraphQLID}},
             resolve(parent, args) {
-                //return _.find(collaborators, {id: args.id})
+                //return _.find(collaborator, {id: args.id})
+                return Collaborator.findById(args.id);
             }
         },
         tasks: {
             type: new GraphQLList(TaskType),
             resolve(parent, args){
                 //return tasks
+                return Task.find({});
             }
         },
         collaborators: {
             type: new GraphQLList(CollaboratorType),
             resolve(parent, args){
                 //return collaborators
+                return Collaborator.find({});
             }
         }
     }
