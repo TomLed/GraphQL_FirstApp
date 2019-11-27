@@ -6,6 +6,12 @@ import { getTasksQuery } from '../queries/queries';
 import TaskDetails from './TaskDetails';
 
 class TaskList extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            selected: null
+        }
+    }
     displayTasks(){
         var data = this.props.data;
         if(data.loading){
@@ -13,8 +19,7 @@ class TaskList extends Component {
         } else {
             return data.tasks.map(task => {
                 return(
-                    <li key={ task.id }>{ task.name }</li>
-                );
+                    <li key={ task.id } onClick={ (e) => this.setState({ selected: task.id }) }>{ task.name }</li>                );
             })
         }
     }
@@ -24,7 +29,7 @@ class TaskList extends Component {
                 <ul id="task-list">
                     { this.displayTasks() }
                 </ul>
-                <TaskDetails />
+                <TaskDetails taskid={this.state.selected} />
             </div>
         );
     }
