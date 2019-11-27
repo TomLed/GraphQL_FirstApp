@@ -11,7 +11,7 @@ class TaskDetails extends Component {
                     <h2>{ task.name }</h2>
                     <p>{ task.date }</p>
                     <p>{ task.collaborator.name }</p>
-                    <p>All tasks by this collaborator:</p>
+                    <p>Toutes les tâches attribuées à cette personne</p>
                     <ul className="other-tasks">
                         { task.collaborator.tasks.map(item => {
                             return <li key={item.id}>{ item.name }</li>
@@ -20,7 +20,7 @@ class TaskDetails extends Component {
                 </div>
             );
         } else {
-            return( <div>No book selected...</div> );
+            return( <div>Pas de tâche sélectionnée</div> );
         }
     }
 

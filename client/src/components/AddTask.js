@@ -40,7 +40,7 @@ class AddTask extends Component {
             <form id="add-task" onSubmit={this.submitForm.bind(this)}>
 
                 <div className="field">
-                    <label>Task name:</label>
+                    <label>Tâche:</label>
                     <input type="text" onChange={(e) => this.setState({name: e.target.value})}/>
                 </div>
 
@@ -51,7 +51,7 @@ class AddTask extends Component {
 
 
                 <div className="field">
-                    <label>Collaborator:</label>
+                    <label>Collaborateurs:</label>
                     <select onChange={(e) => this.setState({collaboratorid: e.target.value})}>
                         <option>Select Collaborator</option>
                         {this.displayCollaborators()}
