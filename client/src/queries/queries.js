@@ -18,4 +18,13 @@ const getCollaboratorsQuery = gql`
     }
 `;
 
-export{getCollaboratorsQuery, getTasksQuery};
+const addTaskMutation = gql`
+    mutation{
+        addTask(name:"", date:null, collaboratorid: ""){
+            name
+            id
+        }
+    }
+`;
+
+export{getCollaboratorsQuery, getTasksQuery, addTaskMutation};

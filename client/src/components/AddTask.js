@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { graphql } from 'react-apollo';
-import {getCollaboratorsQuery} from "../queries/queries";
+import {graphql} from 'react-apollo';
+import {getCollaboratorsQuery, addTaskMutation} from "../queries/queries";
+import {flowRight as compose} from 'lodash';
 
 
 class AddTask extends Component {
@@ -8,12 +9,13 @@ class AddTask extends Component {
         super(props);
         this.state = {
             name:"",
-            date:"",
+            date:Date(),
             collaboratorid:""
         }
     }
     displayCollaborators(){
-        var data = this.props.data
+        var data = this.props.getCollaboratorsQuery;
+        console.log(this.props);
         if(data.loading){
             return(<option>Loading Collaborators...</option>);
         }else{
@@ -24,11 +26,11 @@ class AddTask extends Component {
     }
     submitForm(e){
         e.preventDefault();
-        console.log(this.state)
+        this.props.addTaskMutation();
     }
     render() {
         return (
-            <form id="add-book" onSubmit={this.submitForm.bind(this)}>
+            <form id="add-task" onSubmit={this.submitForm.bind(this)}>
 
                 <div className="field">
                     <label>Task name:</label>
@@ -56,4 +58,7 @@ class AddTask extends Component {
     }
 }
 
-export default graphql(getCollaboratorsQuery)(AddTask);
+export default compose(
+    graphql(getCollaboratorsQuery, {name: "getCollaboratorsQuery"}),
+    graphql(addTaskMutation, {name: "addTaskMutation"})
+)(AddTask);
