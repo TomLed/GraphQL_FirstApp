@@ -4,6 +4,14 @@ import {getCollaboratorsQuery} from "../queries/queries";
 
 
 class AddTask extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            name:"",
+            date:"",
+            collaboratorid:""
+        }
+    }
     displayCollaborators(){
         var data = this.props.data
         if(data.loading){
@@ -14,24 +22,28 @@ class AddTask extends Component {
             })
         }
     }
+    submitForm(e){
+        e.preventDefault();
+        console.log(this.state)
+    }
     render() {
         return (
-            <form id="add-book">
+            <form id="add-book" onSubmit={this.submitForm.bind(this)}>
 
                 <div className="field">
                     <label>Task name:</label>
-                    <input type="text"/>
+                    <input type="text" onChange={(e) => this.setState({name: e.target.value})}/>
                 </div>
 
                 <div className="field">
                     <label>Date:</label>
-                    <input type="date" name="Date"/>
+                    <input type="date" name="Date" onChange={(e) => this.setState({date: e.target.value})}/>
                 </div>
 
 
                 <div className="field">
                     <label>Collaborator:</label>
-                    <select>
+                    <select onChange={(e) => this.setState({collaboratorid: e.target.value})}>
                         <option>Select Collaborator</option>
                         {this.displayCollaborators()}
                     </select>
