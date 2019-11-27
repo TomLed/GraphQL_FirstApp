@@ -1,15 +1,7 @@
 import React, { Component } from 'react';
-import { gql } from 'apollo-boost';
 import { graphql } from 'react-apollo';
+import {getCollaboratorsQuery} from "../queries/queries";
 
-const getCollaboratorsQuery = gql`
-    {
-        collaborators {
-            name
-            id
-        }
-    }
-`;
 
 class AddTask extends Component {
     displayCollaborators(){

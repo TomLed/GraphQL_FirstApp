@@ -1,15 +1,6 @@
 import React, { Component } from 'react';
-import { gql } from 'apollo-boost';
 import { graphql } from 'react-apollo';
-
-const getTasksQuery = gql`
-    {
-        tasks {
-            name
-            id
-        }
-    }
-`;
+import {getTasksQuery} from "../queries/queries";
 
 class TaskList extends Component {
     displayTasks(){
