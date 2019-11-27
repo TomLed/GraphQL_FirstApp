@@ -4,6 +4,7 @@ import {ApolloProvider} from 'react-apollo';
 
 //components
 import TaskList from './components/TaskList'
+import AddTask from "./components/AddTask";
 
 // apollo client setup
 const client = new ApolloClient({
@@ -17,6 +18,7 @@ class App extends Component {
           <div id="main">
             <h1>The best ToDoList</h1>
             <TaskList />
+            <AddTask />
            </div>
         </ApolloProvider>
     );
