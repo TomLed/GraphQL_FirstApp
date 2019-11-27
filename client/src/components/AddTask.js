@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {graphql} from 'react-apollo';
-import {getCollaboratorsQuery, addTaskMutation} from "../queries/queries";
+import {getCollaboratorsQuery, addTaskMutation, getTasksQuery} from "../queries/queries";
 import {flowRight as compose} from 'lodash';
 
 
@@ -31,7 +31,8 @@ class AddTask extends Component {
                 name: this.state.name,
                 date: this.state.date,
                 collaboratorid:this.state.collaboratorid,
-            }
+            },
+            refetchQueries: [{query: getTasksQuery}]
         });
     }
     render() {
