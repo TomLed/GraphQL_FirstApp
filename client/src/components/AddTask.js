@@ -26,7 +26,13 @@ class AddTask extends Component {
     }
     submitForm(e){
         e.preventDefault();
-        this.props.addTaskMutation();
+        this.props.addTaskMutation({
+            variables: {
+                name: this.state.name,
+                date: this.state.date,
+                collaboratorid:this.state.collaboratorid,
+            }
+        });
     }
     render() {
         return (

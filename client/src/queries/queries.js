@@ -19,8 +19,8 @@ const getCollaboratorsQuery = gql`
 `;
 
 const addTaskMutation = gql`
-    mutation{
-        addTask(name:"", date:null, collaboratorid: ""){
+    mutation($name: String!, $date: Date!, $collaboratorid: ID!){
+        addTask(name:$name, date:$date, collaboratorid: $collaboratorid){
             name
             id
         }
