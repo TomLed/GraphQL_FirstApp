@@ -27,4 +27,23 @@ const addTaskMutation = gql`
     }
 `;
 
-export{getCollaboratorsQuery, getTasksQuery, addTaskMutation};
+
+const getTaskQuery = gql`
+    query($id: ID){
+        task(id: $id){
+            id
+            name
+            date
+            collaborator{
+                id
+                name
+                tasks{
+                    name
+                    id
+                }
+            }
+        }
+    }
+`;
+
+export{getCollaboratorsQuery, getTasksQuery, addTaskMutation, getTaskQuery};
